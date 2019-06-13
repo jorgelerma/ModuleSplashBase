@@ -1,5 +1,6 @@
 package com.globant.equattrocchio.cleanarchitecture.mvp.presenter
 
+import android.util.Log
 import com.globant.equattrocchio.cleanarchitecture.mvp.view.ImagesView
 import com.globant.equattrocchio.cleanarchitecture.util.bus.RxBus
 import com.globant.equattrocchio.cleanarchitecture.util.bus.observers.CallServiceButtonObserver
@@ -13,26 +14,10 @@ class ImagesPresenter(private val view: ImagesView, private val getLatestImagesU
 
     fun onCallServiceButtonPressed() {
 
+        Log.e(this.javaClass.simpleName, " CallService button clicked")
         getLatestImagesUseCase.execute(object : DisposableObserver<Boolean>(){
             override fun onComplete() {
-//                ImagesServicesImpl().getLatestImages(object :Observer<Boolean>{
-//                    override fun onSubscribe(d: Disposable) {
-//                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//                    }
-//
-//                    override fun onNext(t: Boolean) {
-//                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//                    }
-//
-//                    override fun onError(e: Throwable) {
-//                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//                    }
-//
-//                    override fun onComplete() {
-//                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//                    }
-//
-//                })
+
             }
 
             override fun onNext(t: Boolean) {

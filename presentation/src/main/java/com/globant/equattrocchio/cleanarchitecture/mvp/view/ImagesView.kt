@@ -10,10 +10,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class ImagesView(private val activityMain: AppCompatActivity): ActivityView(activityMain) {
 
-    fun showText(text: String){
-        activityMain.tv_incoming_json.text = text
-    }
-
     fun callServiceBtnPressed(){
         RxBus.post(CallServiceButtonObserver.CallServiceButtonPressed())
     }

@@ -1,5 +1,7 @@
 package com.globant.equattrocchio.domain;
 
+import android.util.Log;
+
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
@@ -15,6 +17,7 @@ public abstract class UseCase<T, Params> {
     abstract void buildUseCaseObservable(DisposableObserver<T> observer, Params params);
 
     public void execute(DisposableObserver<T> observer, Params params) {
+        Log.e(this.getClass().getSimpleName(), " @ execute method");
         Preconditions.checkNotNull(observer);
         this.buildUseCaseObservable(observer, params);
         addDisposable(observer);

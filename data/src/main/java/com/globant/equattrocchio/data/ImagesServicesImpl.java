@@ -4,9 +4,8 @@ import android.util.Log;
 
 import com.globant.equattrocchio.data.response.Result;
 import com.globant.equattrocchio.data.service.api.SplashbaseApi;
+//import com.globant.equattrocchio.domain.service.ImagesServices;
 import com.globant.equattrocchio.domain.service.ImagesServiceses;
-//import com.globant.equattrocchio.domain.service.ImagesSer
-//import com.globant.equattrocchio.domain.
 
 import io.reactivex.Observer;
 import retrofit2.Call;
@@ -21,6 +20,7 @@ public class ImagesServicesImpl implements ImagesServiceses {
 
     @Override
     public void getLatestImages() {
+        Log.e(this.getClass().getSimpleName(), " @ getLatestImages invoked: ");
         Retrofit retrofit = new Retrofit.Builder().
                 baseUrl(URL).
                 addConverterFactory(GsonConverterFactory.create())
@@ -29,52 +29,24 @@ public class ImagesServicesImpl implements ImagesServiceses {
         SplashbaseApi api  = retrofit.create(SplashbaseApi.class);
 
         Call<Result> call = api.getImages();
-
+        
         call.enqueue(new Callback<Result>() {
+
+
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
-                Log.e(this.getClass().getSimpleName(), " on onResponse: ");
+
+                Log.e(this.getClass().getSimpleName(), " ******  call succesful: " + response.body());
             }
+
+
 
             @Override
             public void onFailure(Call<Result> call, Throwable t) {
-                Log.e(this.getClass().getSimpleName(), " on onFailure: ");
+                Log.e(this.getClass().getSimpleName(), " ******  call failed: ");
+
             }
         });
+
     }
 }
-
-
-//public class ImagesServicesImpl implements ImagesServices {
-//
-//    private static final String URL= "http://splashbase.co/";
-//
-//
-//
-//
-//    @Override
-//    public void getLatestImages(Observer<Boolean> observer) {
-//        Retrofit retrofit = new Retrofit.Builder().
-//                baseUrl(URL).
-//                addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//
-//        SplashbaseApi api  = retrofit.create(SplashbaseApi.class);
-//
-//        Call<Result> call = api.getImages();
-//
-//        call.enqueue(new Callback<Result>() {
-//            @Override
-//            public void onResponse(Call<Result> call, Response<Result> response) {
-//                Log.e(this.getClass().getSimpleName(), " on onResponse: ");
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Result> call, Throwable t) {
-//                Log.e(this.getClass().getSimpleName(), " on onFailure: ");
-//            }
-//        });
-//    }
-//
-//
-//}
