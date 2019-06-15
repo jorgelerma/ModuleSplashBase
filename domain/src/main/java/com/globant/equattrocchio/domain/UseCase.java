@@ -1,10 +1,12 @@
 package com.globant.equattrocchio.domain;
 
-import android.util.Log;
+import com.globant.equattrocchio.domain.models.ResultDomainInput;
 
+import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 
 public abstract class UseCase<T, Params> {
 
@@ -14,17 +16,16 @@ public abstract class UseCase<T, Params> {
         this.disposables = new CompositeDisposable();
     }
 
-    abstract void buildUseCaseObservable(DisposableObserver<T> observer, Params params);
+    abstract Observable<ResultDomainInput> buildUseCaseRx();
 
     public void execute(DisposableObserver<T> observer, Params params) {
-        Log.e(this.getClass().getSimpleName(), " @ execute method");
         Preconditions.checkNotNull(observer);
-        this.buildUseCaseObservable(observer, params);
         addDisposable(observer);
     }
 
-    public void execute(Params params) {
-        this.buildUseCaseObservable(null, params);
+    public Observable<ResultDomainInput> executeRx() {
+        return this.buildUseCaseRx()
+                .subscribeOn(Schedulers.io());
     }
 
     /**

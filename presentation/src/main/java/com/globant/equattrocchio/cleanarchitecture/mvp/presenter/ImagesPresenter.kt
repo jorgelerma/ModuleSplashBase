@@ -1,51 +1,33 @@
 package com.globant.equattrocchio.cleanarchitecture.mvp.presenter
 
 import android.util.Log
-import com.globant.equattrocchio.cleanarchitecture.mvp.view.ImagesView
-import com.globant.equattrocchio.cleanarchitecture.util.bus.RxBus
-import com.globant.equattrocchio.cleanarchitecture.util.bus.observers.CallServiceButtonObserver
-import com.globant.equattrocchio.data.ImagesServicesImpl
-import com.globant.equattrocchio.domain.GetLatestImagesUseCase
-import io.reactivex.Observer
-import io.reactivex.disposables.Disposable
+import com.globant.equattrocchio.cleanarchitecture.mvp.ImagesContract
+import com.globant.equattrocchio.domain.models.ResultDomainInput
 import io.reactivex.observers.DisposableObserver
 
-class ImagesPresenter(private val view: ImagesView, private val getLatestImagesUseCase: GetLatestImagesUseCase) {
+class ImagesPresenter(private val view: ImagesContract.View,
+                      private val model: ImagesContract.Model) : ImagesContract.Presenter {
 
-    fun onCallServiceButtonPressed() {
-
-        Log.e(this.javaClass.simpleName, " CallService button clicked")
-        getLatestImagesUseCase.execute(object : DisposableObserver<Boolean>(){
-            override fun onComplete() {
-
-            }
-
-            override fun onNext(t: Boolean) {
-                loadFromPreferences()
-            }
-
-            override fun onError(e: Throwable) {
-                view.showError()
-            }
-        }, null)
+    override fun showResponse(response: String) {
+        view.showResult(response)
     }
 
-    fun loadFromPreferences(){
-        // view.showText("EL TEXTO QUE ME TRAGIA DE LAS PREFERENCES");
-    }
+    override fun callImages() {
+        model.serviceRequestCall()
+                .subscribe(object : DisposableObserver<ResultDomainInput>() {
+                    override fun onComplete() {
+                        Log.e(this.javaClass.simpleName, "******* onCompletes:");
+                    }
 
-    fun register(){
-        val actvivity = view.getActivity() ?: return
+                    override fun onNext(t: ResultDomainInput) {
+                        Log.e(this.javaClass.simpleName, "******  onNext: ")
+                        val responseReceived = t.images.toString()
+                        showResponse(responseReceived)
+                    }
 
-        RxBus.subscribe(actvivity, object : CallServiceButtonObserver(){
-            override fun onEvent(value: CallServiceButtonPressed?) {
-                onCallServiceButtonPressed()
-            }
-        })
-    }
-
-    fun unregister(){
-        val activity = view.getActivity() ?: return
-        RxBus.clear(activity)
+                    override fun onError(e: Throwable) {
+                        Log.e(this.javaClass.simpleName, "******* onErrors: ")
+                    }
+                })
     }
 }

@@ -1,13 +1,11 @@
 package com.globant.equattrocchio.domain
 
-import android.util.Log
-import com.globant.equattrocchio.domain.service.ImagesServiceses
-import io.reactivex.observers.DisposableObserver
+import com.globant.equattrocchio.domain.models.ResultDomainInput
+import com.globant.equattrocchio.domain.service.ImagesServicese
+import io.reactivex.Observable
 
-class GetLatestImagesUseCase(private val imagesServices: ImagesServiceses): UseCase<Boolean, Void>() {
-
-    override fun buildUseCaseObservable(observer: DisposableObserver<Boolean>?, params: Void?) {
-        Log.e(this.javaClass.simpleName, " @ buildUseCaseObservable impl called: ")
-        imagesServices.getLatestImages()
+class GetLatestImagesUseCase(private val imagesService: ImagesServicese) {
+    operator fun invoke(): Observable<ResultDomainInput> {
+        return imagesService.getLatestImagesRx()
     }
 }

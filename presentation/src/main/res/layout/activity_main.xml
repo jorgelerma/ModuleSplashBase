@@ -7,8 +7,13 @@
         <Button
             android:id="@+id/btn_call_service"
             android:text="@string/call_service"
-            android:layout_width="@dimen/btn_widht"
-            android:layout_height="@dimen/btn_height" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btn_call_service_request"
+            android:text="@string/call_service_request"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/tv_incoming_json"
             android:text="@string/incoming_json"
