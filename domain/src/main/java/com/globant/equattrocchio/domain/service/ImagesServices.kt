@@ -5,7 +5,7 @@ import com.globant.equattrocchio.domain.models.ResultDomainInput
 import io.reactivex.Observable
 
 
-interface ImagesServicese {
+interface ImagesServices {
 
     fun getLatestImages()
 

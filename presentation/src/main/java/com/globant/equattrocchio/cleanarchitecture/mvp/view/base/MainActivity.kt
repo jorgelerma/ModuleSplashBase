@@ -7,10 +7,10 @@ import com.globant.equattrocchio.cleanarchitecture.mvp.model.ImagesModel
 import com.globant.equattrocchio.cleanarchitecture.mvp.presenter.ImagesPresenter
 import com.globant.equattrocchio.cleanarchitecture.mvp.view.ImagesView
 import com.globant.equattrocchio.data.ImageMapper
-import com.globant.equattrocchio.data.ImageServiceImpl
+import com.globant.equattrocchio.data.ImagesRepository
+import com.globant.equattrocchio.data.service.api.ImagesApi
 import com.globant.equattrocchio.domain.GetLatestImagesUseCase
 import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity: AppCompatActivity() {
@@ -26,7 +26,7 @@ class MainActivity: AppCompatActivity() {
 
         presenter = ImagesPresenter(
                 ImagesView(this, statusSubject),
-                ImagesModel(GetLatestImagesUseCase(ImageServiceImpl(ImageMapper()))))
+                ImagesModel(GetLatestImagesUseCase(ImagesRepository(ImageMapper(), ImagesApi()))))
 
         btn_call_service.setOnClickListener {
             presenter.callImages()
