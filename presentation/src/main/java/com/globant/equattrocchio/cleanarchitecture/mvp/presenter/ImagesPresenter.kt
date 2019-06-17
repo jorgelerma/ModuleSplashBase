@@ -12,8 +12,8 @@ class ImagesPresenter(private val view: ImagesContract.View,
 
     lateinit var imagesResponse: Observable<ResultDomainInput>
     private val compositeDiposable = CompositeDisposable()
-    val REQUEST_SENT = true
-    val REQUEST_COMPLETED = false
+    private val REQUEST_SENT = true
+    private val REQUEST_COMPLETED = false
 
     override fun showResponse(response: String) {
         view.showResult(response)
@@ -22,22 +22,24 @@ class ImagesPresenter(private val view: ImagesContract.View,
     override fun callImages() {
         imagesResponse = model.serviceRequestCall()
         view.setStatusSubject(REQUEST_SENT)
-        compositeDiposable.add(imagesResponse.subscribeWith(object : DisposableObserver<ResultDomainInput>(){
-            override fun onComplete() {
-                Log.e(this.javaClass.simpleName, "******* onCompletes:")
-            }
+        if (!::imagesResponse.isInitialized) {
+            compositeDiposable.add(imagesResponse.subscribeWith(object : DisposableObserver<ResultDomainInput>() {
+                override fun onComplete() {
+                    Log.e(this.javaClass.simpleName, "******* onCompletes:")
+                }
 
-            override fun onNext(t: ResultDomainInput) {
-                view.setStatusSubject(REQUEST_COMPLETED)
-                val responseReceived = t.images.toString()
-                showResponse(responseReceived)
-            }
+                override fun onNext(t: ResultDomainInput) {
+                    view.setStatusSubject(REQUEST_COMPLETED)
+                    val responseReceived = t.images.toString()
+                    showResponse(responseReceived)
+                }
 
-            override fun onError(e: Throwable) {
-                Log.e(this.javaClass.simpleName, "******* onErrors: ")
-            }
+                override fun onError(e: Throwable) {
+                    Log.e(this.javaClass.simpleName, "******* onErrors: ")
+                }
 
-        }))
+            }))
+        }
     }
 
     override fun disposeObserver() {
