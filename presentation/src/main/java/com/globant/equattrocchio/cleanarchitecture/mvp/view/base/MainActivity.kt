@@ -9,32 +9,49 @@ import com.globant.equattrocchio.cleanarchitecture.mvp.view.ImagesView
 import com.globant.equattrocchio.data.ImageMapper
 import com.globant.equattrocchio.data.ImageServiceImpl
 import com.globant.equattrocchio.domain.GetLatestImagesUseCase
+import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity: AppCompatActivity() {
 
     private lateinit var presenter: ImagesPresenter
+    private var requestStatus = false
+    private val statusSubject: PublishSubject<Boolean> = PublishSubject.create<Boolean>()
 
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         presenter = ImagesPresenter(
-                ImagesView(this),
+                ImagesView(this, statusSubject),
                 ImagesModel(GetLatestImagesUseCase(ImageServiceImpl(ImageMapper()))))
 
         btn_call_service.setOnClickListener {
             presenter.callImages()
+        }
+
+        statusSubject.subscribe {
+            setStatusSubject(it)
         }
     }
 
     @Override
     override fun onResume() {
         super.onResume()
+        if(requestStatus) {
+            this.presenter.callImages()
+        }
     }
 
     @Override
     override fun onPause() {
         super.onPause()
+        this.presenter.disposeObserver()
+    }
+
+    private fun setStatusSubject(status: Boolean){
+        this.requestStatus = status
     }
 }

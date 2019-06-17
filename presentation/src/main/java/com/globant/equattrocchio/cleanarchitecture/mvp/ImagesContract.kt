@@ -7,6 +7,7 @@ interface ImagesContract {
     interface Presenter {
         fun showResponse(response: String)
         fun callImages()
+        fun disposeObserver()
     }
 
     interface Model {
@@ -16,5 +17,6 @@ interface ImagesContract {
     interface View {
         fun showError()
         fun showResult(input: String)
+        fun setStatusSubject(status: Boolean)
     }
 }
