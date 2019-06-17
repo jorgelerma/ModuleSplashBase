@@ -6,12 +6,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ImagesApi {
 
-    private var retrofitInstance: SplashbaseApi? = null
+    private lateinit var retrofitInstance: SplashbaseApi
     private val URL = "http://splashbase.co/"
 
-    fun getInstance(): SplashbaseApi? {
+    fun getInstance(): SplashbaseApi {
 
-        if(retrofitInstance == null){
+        if(!::retrofitInstance.isInitialized){
             val retrofit = Retrofit.Builder()
                     .baseUrl(URL)
                     .addConverterFactory(GsonConverterFactory.create())

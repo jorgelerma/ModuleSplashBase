@@ -8,7 +8,7 @@ import io.reactivex.Observable
 class ImagesRepository(private val mapper: ImageMapper, private val imagesApi: ImagesApi) : ImagesServices {
 
     override fun getLatestImagesRx(): Observable<ResultDomainInput> {
-        return imagesApi.getInstance()!!.getTheLatestImages()
+        return imagesApi.getInstance().getTheLatestImages()
                 .map { resp -> mapper.mapDataModelToDomainModel(resp) }
     }
 
