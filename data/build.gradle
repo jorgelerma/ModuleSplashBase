@@ -45,6 +45,12 @@ dependencies {
     implementation project(path: ':domain')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // dagger
+    implementation 'com.google.dagger:dagger:2.17'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.17'
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.17'
+    implementation 'com.google.dagger:dagger-android-support:2.17'
 }
 repositories {
     google()

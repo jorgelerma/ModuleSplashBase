@@ -6,8 +6,9 @@ import com.globant.equattrocchio.domain.models.ResultDomainInput
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class ImagesModel(private val getLatestImagesUseCase: GetLatestImagesUseCase) : ImagesContract.Model {
+class ImagesModel @Inject constructor(private val getLatestImagesUseCase: GetLatestImagesUseCase) : ImagesContract.Model {
 
     override fun serviceRequestCall(): Observable<ResultDomainInput> {
         return getLatestImagesUseCase()

@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
+        android:name=".mvp.App"
         >
         <activity android:name=".mvp.view.base.MainActivity" >
             <intent-filter>

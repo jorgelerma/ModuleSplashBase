@@ -7,7 +7,7 @@ import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 
-class ImagesPresenter(private val view: ImagesContract.View,
+class ImagesPresenter constructor(private val view: ImagesContract.View,
                       private val model: ImagesContract.Model) : ImagesContract.Presenter {
 
     lateinit var imagesResponse: Observable<ResultDomainInput>
@@ -22,7 +22,7 @@ class ImagesPresenter(private val view: ImagesContract.View,
     override fun callImages() {
         imagesResponse = model.serviceRequestCall()
         view.setStatusSubject(REQUEST_SENT)
-        if (!::imagesResponse.isInitialized) {
+        if (imagesResponse != null) {
             compositeDiposable.add(imagesResponse.subscribeWith(object : DisposableObserver<ResultDomainInput>() {
                 override fun onComplete() {
                     Log.e(this.javaClass.simpleName, "******* onCompletes:")
