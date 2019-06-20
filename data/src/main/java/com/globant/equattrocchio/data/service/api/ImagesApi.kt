@@ -5,16 +5,17 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
+import com.globant.equattrocchio.data.utils.Constants.BASE_URL
+
 class ImagesApi {
 
     private lateinit var retrofitInstance: SplashbaseApi
-    private val URL = "http://splashbase.co/"
 
     fun getInstance(): SplashbaseApi {
 
         if(!::retrofitInstance.isInitialized){
             val retrofit = Retrofit.Builder()
-                    .baseUrl(URL)
+                    .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .build()
