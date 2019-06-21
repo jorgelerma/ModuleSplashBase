@@ -1,13 +1,18 @@
 package com.globant.equattrocchio.cleanarchitecture.mvp.view.base
 
+import android.app.Activity
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.globant.equattrocchio.cleanarchitecture.R
 import com.globant.equattrocchio.cleanarchitecture.di.component.AppComponent
-import com.globant.equattrocchio.cleanarchitecture.di.component.DaggerAppComponent
+//import com.globant.equattrocchio.cleanarchitecture.di.component.DaggerAppComponent
 import com.globant.equattrocchio.cleanarchitecture.mvp.model.ImagesModel
 import com.globant.equattrocchio.cleanarchitecture.mvp.presenter.ImagesPresenter
 import com.globant.equattrocchio.cleanarchitecture.mvp.view.ImagesView
+import dagger.android.AndroidInjection
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasActivityInjector
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
@@ -23,11 +28,23 @@ class MainActivity: AppCompatActivity() {
 
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        AndroidInjection.inject(this)
+
         super.onCreate(savedInstanceState)
+
+//        AndroidInjection.inject(this)
 
         setContentView(R.layout.activity_main)
 
-        // getActivityComponent().inject(this)
+//         getActivityComponent().inject(this)
+//        DaggerAppComponent.builder().build()
+
+//        DaggerAppComponent.builder()
+//                .application(application)
+//                .build()
+//                .inject(this)
+
 
         presenter = ImagesPresenter(
                 ImagesView(this, statusSubject), imagesModel)
@@ -61,7 +78,8 @@ class MainActivity: AppCompatActivity() {
         this.requestStatus = status
     }
 
-    private fun getActivityComponent(): AppComponent{
-        return DaggerAppComponent.builder().build()
-    }
+
+//    private fun getActivityComponent(): AppComponent {
+////        return DaggerAppComponent.builder().build()
+//    }
 }

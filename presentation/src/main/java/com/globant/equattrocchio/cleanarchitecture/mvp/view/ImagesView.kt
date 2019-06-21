@@ -1,6 +1,5 @@
 package com.globant.equattrocchio.cleanarchitecture.mvp.view
 
-import android.support.v7.app.AppCompatActivity
 import com.globant.equattrocchio.cleanarchitecture.R
 import com.globant.equattrocchio.cleanarchitecture.mvp.ImagesContract
 import com.globant.equattrocchio.cleanarchitecture.mvp.view.base.MainActivity
