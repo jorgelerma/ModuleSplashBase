@@ -13,41 +13,18 @@ import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
 class App: Application(), HasActivityInjector {
-
-//class App: Application() {
-
-
     @Inject
-    lateinit var activityAndroidInjector: DispatchingAndroidInjector<Activity>
-//    lateinit var activityAndroidInjector: DispatchingAndroidInjector<Activity>
+    lateinit var activityDispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
 
+    override fun activityInjector(): AndroidInjector<Activity> {
+        return activityDispatchingAndroidInjector
+    }
 
-    @Override
     override fun onCreate() {
         super.onCreate()
-//            DaggerAppComponent.builder()
-//                    .application(this)
-//                    .build()
-//                    .inject(this)
-
-        DaggerAppComponent.builder()
+        DaggerAppComponent
+                .builder()
                 .create(this)
                 .inject(this)
-
-//        DaggerAppComponent.builder().application(this).build().inject(this)
-//        DaggerAppComponent.builder().application(this).build().inject(this)
-
     }
-
-    override fun activityInjector(): DispatchingAndroidInjector<Activity> {
-        return activityAndroidInjector
-    }
-
-//    override fun activityInjector(): AndroidInjector<Activity> {
-//        return activityAndroidInjector
-//    }
-
-//    private fun getActivityComponent(): AppComponent {
-//        return DaggerAppComponent.builder().build()
-//    }
 }

@@ -19,10 +19,6 @@ import javax.inject.Singleton
 class NetworksModules {
 
     @Provides
-    @Singleton
-    fun provideContext(application: Application): Context = application
-
-    @Provides
     fun provideImageApiInstance(): ImagesApi = ImagesApi()
 
     @Provides
@@ -33,22 +29,4 @@ class NetworksModules {
 
     @Provides
     fun providesGetLatestImageUseCase(imagesRepository: ImagesRepository): GetLatestImagesUseCase = GetLatestImagesUseCase(imagesRepository)
-
-    //************ UP OK
-
-//    @Binds
-//    abstract fun provideImagesView(): ImagesView
-
-//    @Provides
-//    fun provideMainActivityAlias(@Named("ValueA") mainActivity: MainActivity): MainActivity {
-//        return mainActivity
-//    }
-
-//
-//    @Provides
-//    fun providesImagesPresenter() : ImagesPresenter = ImagesPresenter(provideImageModel())
-
-//    @Provides
-//    fun provideImagesView(): ImagesView = ImagesView(@ContributesAndroidInjector)
-
 }

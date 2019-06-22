@@ -53,7 +53,6 @@ dependencies {
     implementation project(path: ':data')
 //    compile project(path: ':domain', configuration: 'default')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'junit:junit:4.12'
 
     androidTestImplementation 'org.mockito:mockito-android:2.18.3'
     androidTestImplementation 'com.android.support.test:runner:0.5'
@@ -73,12 +72,12 @@ dependencies {
     /* Dagger2 - We are going to use dagger.android which includes
      * support for Activity and fragment injection so we need to include
      * the following dependencies */
-    implementation 'com.google.dagger:dagger-android:2.17'
-    implementation 'com.google.dagger:dagger-android-support:2.17'
-    kapt 'com.google.dagger:dagger-android-processor:2.17'
+    implementation "com.google.dagger:dagger-android:2.21"
+    implementation "com.google.dagger:dagger-android-support:2.21"
+    implementation "javax.inject:javax.inject:1"
 
-    /* Dagger2 - default dependency */
-    kapt 'com.google.dagger:dagger-compiler:2.17'
+    kapt "com.google.dagger:dagger-compiler:2.21",
+            "com.google.dagger:dagger-android-processor:2.21"
 
 
 

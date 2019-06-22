@@ -2,6 +2,7 @@ package com.globant.equattrocchio.cleanarchitecture.di.component
 
 import android.app.Application
 import com.globant.equattrocchio.cleanarchitecture.di.module.ActivityModule
+import com.globant.equattrocchio.cleanarchitecture.di.module.ApplicationInjectorsModule
 import com.globant.equattrocchio.cleanarchitecture.di.module.NetworksModules
 import com.globant.equattrocchio.cleanarchitecture.mvp.App
 import com.globant.equattrocchio.cleanarchitecture.mvp.model.ImagesModel
@@ -22,8 +23,7 @@ import javax.inject.Singleton
 @Singleton
 @Component(
         modules = [
-            ActivityModule::class,
-            AndroidInjectionModule::class,
+            ApplicationInjectorsModule::class,
             AndroidSupportInjectionModule::class
         ]
 )
