@@ -2,7 +2,11 @@ package com.globant.equattrocchio.cleanarchitecture.di.module
 
 import android.app.Application
 import android.content.Context
+import com.globant.equattrocchio.cleanarchitecture.mvp.ImagesContract
 import com.globant.equattrocchio.cleanarchitecture.mvp.model.ImagesModel
+import com.globant.equattrocchio.cleanarchitecture.mvp.presenter.ImagesPresenter
+import com.globant.equattrocchio.cleanarchitecture.mvp.view.ImagesView
+import com.globant.equattrocchio.cleanarchitecture.mvp.view.base.MainActivity
 import com.globant.equattrocchio.data.ImageMapper
 import com.globant.equattrocchio.data.ImagesRepository
 import com.globant.equattrocchio.data.service.api.ImagesApi
@@ -25,12 +29,26 @@ class NetworksModules {
     fun provideImageMapper(): ImageMapper = ImageMapper()
 
     @Provides
-    fun provideImageRepository(): ImagesRepository = ImagesRepository(provideImageMapper(), provideImageApiInstance())
+    fun provideImageRepository(imagesApi: ImagesApi, imagesMapper: ImageMapper): ImagesRepository = ImagesRepository(imagesMapper, imagesApi)
 
     @Provides
-    fun providesGetLatestImageUseCase(): GetLatestImagesUseCase = GetLatestImagesUseCase(provideImageRepository())
+    fun providesGetLatestImageUseCase(imagesRepository: ImagesRepository): GetLatestImagesUseCase = GetLatestImagesUseCase(imagesRepository)
 
-    @Provides
-    fun provideImageModel(): ImagesModel = ImagesModel(providesGetLatestImageUseCase())
+    //************ UP OK
+
+//    @Binds
+//    abstract fun provideImagesView(): ImagesView
+
+//    @Provides
+//    fun provideMainActivityAlias(@Named("ValueA") mainActivity: MainActivity): MainActivity {
+//        return mainActivity
+//    }
+
+//
+//    @Provides
+//    fun providesImagesPresenter() : ImagesPresenter = ImagesPresenter(provideImageModel())
+
+//    @Provides
+//    fun provideImagesView(): ImagesView = ImagesView(@ContributesAndroidInjector)
 
 }

@@ -11,6 +11,7 @@ import com.globant.equattrocchio.data.service.api.ImagesApi
 import dagger.BindsInstance
 import dagger.Component
 import dagger.Provides
+import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
@@ -18,29 +19,17 @@ import javax.inject.Singleton
 //@Component(dependencies = [(AppComponent::class)])
 //@Singleton
 
+@Singleton
 @Component(
         modules = [
-            NetworksModules::class,
             ActivityModule::class,
-            AndroidSupportInjectionModule::class]
+            AndroidInjectionModule::class,
+            AndroidSupportInjectionModule::class
+        ]
 )
-@Singleton
-interface AppComponent{
+interface AppComponent : AndroidInjector<App>{
 
     @Component.Builder
-    interface Builder {
-        @BindsInstance
-        fun application(application: Application): Builder
-
-        fun build(): AppComponent
+    abstract class Builder : AndroidInjector.Builder<App>() {
     }
-
-    fun inject(app: App)
-
-//    fun getImagesApi(): ImagesApi
-//
-//    fun getImageMapper(): ImageMapper
-//
-//    fun getImageModel(): ImagesModel
-
 }

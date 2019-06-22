@@ -6,9 +6,12 @@ import com.globant.equattrocchio.domain.models.ResultDomainInput
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
+import javax.inject.Inject
 
-class ImagesPresenter constructor(private val view: ImagesContract.View,
-                      private val model: ImagesContract.Model) : ImagesContract.Presenter {
+class ImagesPresenter @Inject constructor(private val view : ImagesContract.View,  private val model: ImagesContract.Model) : ImagesContract.Presenter {
+
+//    @Inject
+//    lateinit var view: ImagesContract.View
 
     lateinit var imagesResponse: Observable<ResultDomainInput>
     private val compositeDiposable = CompositeDisposable()

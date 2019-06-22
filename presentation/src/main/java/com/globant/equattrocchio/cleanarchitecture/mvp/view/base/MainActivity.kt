@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.globant.equattrocchio.cleanarchitecture.R
 import com.globant.equattrocchio.cleanarchitecture.di.component.AppComponent
+import com.globant.equattrocchio.cleanarchitecture.mvp.ImagesContract
 //import com.globant.equattrocchio.cleanarchitecture.di.component.DaggerAppComponent
 import com.globant.equattrocchio.cleanarchitecture.mvp.model.ImagesModel
 import com.globant.equattrocchio.cleanarchitecture.mvp.presenter.ImagesPresenter
@@ -19,12 +20,17 @@ import javax.inject.Inject
 
 class MainActivity: AppCompatActivity() {
 
-    private lateinit var presenter: ImagesPresenter
     private var requestStatus = false
     private val statusSubject: PublishSubject<Boolean> = PublishSubject.create<Boolean>()
 
     @Inject
-    lateinit var imagesModel: ImagesModel
+    lateinit var presenter: ImagesContract.Presenter
+
+//    @Inject
+//    lateinit var imagesModel: ImagesModel
+//
+//    @Inject
+//    lateinit var imagesView: ImagesView
 
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,8 +52,10 @@ class MainActivity: AppCompatActivity() {
 //                .inject(this)
 
 
-        presenter = ImagesPresenter(
-                ImagesView(this, statusSubject), imagesModel)
+//        presenter = ImagesPresenter(imagesView, imagesModel)
+//                ImagesView(this, statusSubject), imagesModel)
+//                ImagesView(this), imagesModel)
+
 
 //                ImagesModel(GetLatestImagesUseCase(ImagesRepository(imageMapper, imagesApiService))))
 
