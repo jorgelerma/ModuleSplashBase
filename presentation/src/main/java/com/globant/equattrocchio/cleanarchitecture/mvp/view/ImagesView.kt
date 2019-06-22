@@ -5,8 +5,9 @@ import com.globant.equattrocchio.cleanarchitecture.mvp.ImagesContract
 import com.globant.equattrocchio.cleanarchitecture.mvp.view.base.MainActivity
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
-class ImagesView(private val activityMain: MainActivity, private val statuSubject: PublishSubject<Boolean>) : ImagesContract.View {
+class ImagesView @Inject constructor(private val activityMain: MainActivity) : ImagesContract.View {
     override fun showError() {
         activityMain.tv_incoming_json.text = activityMain.getString(R.string.connection_error)
     }
@@ -16,6 +17,6 @@ class ImagesView(private val activityMain: MainActivity, private val statuSubjec
     }
 
     override fun setStatusSubject(status: Boolean) {
-        statuSubject.onNext(status)
+//        statuSubject.onNext(status)
     }
 }

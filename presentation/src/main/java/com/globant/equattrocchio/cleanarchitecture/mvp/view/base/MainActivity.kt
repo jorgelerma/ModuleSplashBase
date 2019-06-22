@@ -26,6 +26,9 @@ class MainActivity: AppCompatActivity() {
     @Inject
     lateinit var imagesModel: ImagesModel
 
+    @Inject
+    lateinit var imagesView: ImagesView
+
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -46,8 +49,10 @@ class MainActivity: AppCompatActivity() {
 //                .inject(this)
 
 
-        presenter = ImagesPresenter(
-                ImagesView(this, statusSubject), imagesModel)
+//        presenter = ImagesPresenter(
+//                ImagesView(this, statusSubject), imagesModel)
+
+        presenter = ImagesPresenter(imagesView, imagesModel)
 
 //                ImagesModel(GetLatestImagesUseCase(ImagesRepository(imageMapper, imagesApiService))))
 
