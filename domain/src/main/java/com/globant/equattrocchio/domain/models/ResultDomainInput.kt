@@ -1,4 +1,3 @@
 package com.globant.equattrocchio.domain.models
 
-class ResultDomainInputs {
-}
+data class ResultDomainInput(var images: List<Image> = emptyList())

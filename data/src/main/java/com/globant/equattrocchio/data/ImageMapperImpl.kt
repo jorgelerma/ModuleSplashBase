@@ -1,27 +1,25 @@
 package com.globant.equattrocchio.data
 
-import com.globant.equattrocchio.data.response.Image
-import com.globant.equattrocchio.data.response.ResultInput
+import com.globant.equattrocchio.data.response.ImageCache
+import com.globant.equattrocchio.data.response.ResultDataInput
+import com.globant.equattrocchio.domain.models.Image
 import com.globant.equattrocchio.domain.models.ResultDomainInput
 import javax.inject.Inject
 
-class ImageMapper @Inject constructor() : IImageMapperContract {
+class ImageMapperImpl @Inject constructor() : ImageMapper {
 
-    override fun mapDataModelToDomainModel(inputModel: ResultInput): ResultDomainInput {
+    override fun mapDataModelToDomainModel(inputModel: ResultDataInput): ResultDomainInput {
         return ResultDomainInput().apply {
             images = inputModel.images.map { mapImage(it) }
         }
     }
 
-    override fun mapImage(image: Image): com.globant.equattrocchio.domain.models.Image {
-        return com.globant.equattrocchio.domain.models.Image().apply {
+    override fun mapImage(image: ImageCache): Image {
+        return Image().apply {
             id = image.id
-            sourceId = image.sourceId
+            url = image.url
+            largeUrl = image.largeUrl
+            sourceId = image.sourceId as String
         }
     }
-}
-
-interface BaseMapper<I, O> {
-    fun transformTo(input: I): O
-    fun transformFrom(output: O): I
 }

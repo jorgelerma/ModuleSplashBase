@@ -1,3 +1,3 @@
 package com.globant.equattrocchio.data.response
 
-data class ResultInput(var images: List<Image> = emptyList())
+data class ResultDataInput(var images: List<ImageCache> = emptyList())

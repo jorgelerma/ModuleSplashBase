@@ -5,7 +5,7 @@ import io.reactivex.Observable
 
 interface ImagesContract {
     interface Presenter {
-        fun showResponse(response: String)
+        fun showResponse(response: ResultDomainInput)
         fun callImages()
         fun disposeObserver()
     }
@@ -16,7 +16,7 @@ interface ImagesContract {
 
     interface View {
         fun showError()
-        fun showResult(input: String)
+        fun showResult(input: ResultDomainInput)
         fun setStatusSubject(status: Boolean)
     }
 }

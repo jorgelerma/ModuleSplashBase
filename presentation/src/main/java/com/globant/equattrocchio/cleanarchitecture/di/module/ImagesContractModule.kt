@@ -4,29 +4,32 @@ import com.globant.equattrocchio.cleanarchitecture.mvp.ImagesContract
 import com.globant.equattrocchio.cleanarchitecture.mvp.model.ImagesModel
 import com.globant.equattrocchio.cleanarchitecture.mvp.presenter.ImagesPresenter
 import com.globant.equattrocchio.cleanarchitecture.mvp.view.ImagesView
-import com.globant.equattrocchio.data.IImageMapperContract
 import com.globant.equattrocchio.data.ImageMapper
-import com.globant.equattrocchio.data.ImagesRepository
-import com.globant.equattrocchio.data.service.api.IImagesApi
+import com.globant.equattrocchio.data.ImageMapperImpl
+import com.globant.equattrocchio.data.ImageRepository
 import com.globant.equattrocchio.data.service.api.ImagesApi
-import com.globant.equattrocchio.domain.service.ImagesServices
+import com.globant.equattrocchio.data.service.api.ImagesApiImpl
+import com.globant.equattrocchio.domain.service.ImageService
 import dagger.Binds
 import dagger.Module
 import dagger.Reusable
 
-@Module
+@Module(includes = [
+    SubjectsModule::class
+])
 abstract class ImagesContractModule {
-    @Binds
-    @Reusable
-    abstract fun provideImagesMapper(imagesMapper: ImageMapper): IImageMapperContract
 
     @Binds
     @Reusable
-    abstract fun provideImagesApi(imagesApi: ImagesApi): IImagesApi
+    abstract fun provideImagesMapper(imagesMapper: ImageMapperImpl): ImageMapper
 
     @Binds
     @Reusable
-    abstract fun provideImagesRepository(imagesRepository: ImagesRepository): ImagesServices
+    abstract fun provideImagesApi(imagesApi: ImagesApiImpl): ImagesApi
+
+    @Binds
+    @Reusable
+    abstract fun provideImagesRepository(imagesRepository: ImageRepository): ImageService
 
     @Binds
     @Reusable

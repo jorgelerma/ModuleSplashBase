@@ -1,5 +1,5 @@
 package com.globant.equattrocchio.data.service.api
 
-interface IImagesApi {
+interface ImagesApi {
     fun getInstance(): SplashbaseApi
 }
