@@ -10,9 +10,6 @@ import javax.inject.Inject
 
 class ImagesPresenter @Inject constructor(private val view : ImagesContract.View,  private val model: ImagesContract.Model) : ImagesContract.Presenter {
 
-//    @Inject
-//    lateinit var view: ImagesContract.View
-
     lateinit var imagesResponse: Observable<ResultDomainInput>
     private val compositeDiposable = CompositeDisposable()
     private val REQUEST_SENT = true

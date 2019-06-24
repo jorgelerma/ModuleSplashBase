@@ -3,16 +3,17 @@ package com.globant.equattrocchio.data
 import com.globant.equattrocchio.data.response.Image
 import com.globant.equattrocchio.data.response.ResultInput
 import com.globant.equattrocchio.domain.models.ResultDomainInput
+import javax.inject.Inject
 
-class ImageMapper {
+class ImageMapper @Inject constructor() : IImageMapperContract {
 
-    fun mapDataModelToDomainModel(inputModel: ResultInput): ResultDomainInput {
+    override fun mapDataModelToDomainModel(inputModel: ResultInput): ResultDomainInput {
         return ResultDomainInput().apply {
             images = inputModel.images.map { mapImage(it) }
         }
     }
 
-    fun mapImage(image: Image): com.globant.equattrocchio.domain.models.Image {
+    override fun mapImage(image: Image): com.globant.equattrocchio.domain.models.Image {
         return com.globant.equattrocchio.domain.models.Image().apply {
             id = image.id
             sourceId = image.sourceId

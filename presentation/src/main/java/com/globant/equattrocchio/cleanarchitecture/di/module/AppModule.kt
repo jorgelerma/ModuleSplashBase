@@ -6,10 +6,10 @@ import dagger.Binds
 import dagger.Module
 
 @Module(includes = [
-    ActivityModule::class,
-    NetworksModules::class
+    ApplicationInjectorsModule::class
 ])
-abstract class ApplicationInjectorsModule {
+abstract class AppModule {
+
     @Binds
-    internal abstract fun provideContext(application: App): Context
+    internal abstract fun provideContext(application: App) : Context
 }

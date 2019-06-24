@@ -5,12 +5,13 @@ import com.globant.equattrocchio.data.utils.Constants.BASE_URL
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 
-class ImagesApi {
+class ImagesApi @Inject constructor() : IImagesApi {
 
     private lateinit var retrofitInstance: SplashbaseApi
 
-    fun getInstance(): SplashbaseApi {
+    override fun getInstance(): SplashbaseApi {
 
         if(!::retrofitInstance.isInitialized){
             val retrofit = Retrofit.Builder()
