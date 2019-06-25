@@ -5,8 +5,9 @@ import com.globant.equattrocchio.domain.service.ImageService
 import io.reactivex.Observable
 import javax.inject.Inject
 
-class GetLatestImagesUseCase @Inject constructor(private val imageService: ImageService) {
-    operator fun invoke(): Observable<ResultDomainInput> {
+class GetLatestImagesUseCase @Inject constructor(private val imageService: ImageService) : ImageUseCasesContract.GetLatestImagesContract {
+
+    override fun getLatestImages(): Observable<ResultDomainInput> {
         return imageService.getLatestImages()
     }
 }

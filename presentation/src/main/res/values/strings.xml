@@ -4,4 +4,6 @@
     <string name="call_service">Get Latest Images</string>
     <string name="call_service_request">Search Images</string>
     <string name="connection_error">Something went wrong, please try again later.</string>
+    <string name="enter_your_search">Enter your search</string>
+    <string name="image_description">an image</string>
 </resources>

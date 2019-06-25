@@ -6,4 +6,6 @@ import io.reactivex.Observable
 interface ImageService {
 
     fun getLatestImages(): Observable<ResultDomainInput>
+
+    fun searchImages(searchQuery: String): Observable<ResultDomainInput>
 }

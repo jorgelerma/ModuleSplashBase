@@ -37,7 +37,7 @@ class ImagesPresenterTest {
     fun callImagesTest() {
         `when`(model.serviceRequestCall())
                 .thenReturn(Observable.just(resultDomainInput))
-        presenter.callImages()
+        presenter.requestLatestImages()
         verify(view).showResult(resultDomainInput)
     }
 }

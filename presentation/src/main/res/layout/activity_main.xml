@@ -1,22 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-        <Button
-            android:id="@+id/btn_call_service"
-            android:text="@string/call_service"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <Button
-            android:id="@+id/btn_call_service_request"
-            android:text="@string/call_service_request"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/tv_incoming_json"
-            android:text="@string/incoming_json"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/tv_height" />
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btn_call_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/call_service" />
+
+    <EditText
+        android:id="@+id/et_input_query"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_your_search" />
+
+    <Button
+        android:id="@+id/btn_search_query_request"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/call_service_request" />
+
+    <ImageView
+        android:id="@+id/iv_image_holder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/image_description"/>
+
+    <TextView
+        android:id="@+id/tv_incoming_json"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tv_height"
+        android:text="@string/incoming_json" />
 </LinearLayout>

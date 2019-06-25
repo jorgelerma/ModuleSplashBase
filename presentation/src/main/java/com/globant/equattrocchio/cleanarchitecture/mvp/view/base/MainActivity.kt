@@ -27,8 +27,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         btn_call_service.setOnClickListener {
-            imagesPresenter.callImages()
+            imagesPresenter.requestLatestImages()
         }
+
+        btn_search_query_request.setOnClickListener {
+            imagesPresenter.searchImages(et_input_query.text.trim().toString())
+        }
+
 
         statusSubject.subscribe {
             setStatusSubject(it)
@@ -39,7 +44,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         if (requestStatus) {
-            imagesPresenter.callImages()
+            imagesPresenter.requestLatestImages()
         }
     }
 
