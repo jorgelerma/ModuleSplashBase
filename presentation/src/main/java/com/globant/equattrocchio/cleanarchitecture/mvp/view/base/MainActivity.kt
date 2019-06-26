@@ -27,17 +27,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var imagesAdapter: ImagesAdapter
     private lateinit var linearlayoutManager: LinearLayoutManager
 
-    private lateinit var imagesList: ArrayList<ImageModel>
-
-
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
 
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        imagesList = arrayListOf(ImageModel(32, "https://splashbase.s3.amazonaws.com/unsplash/regular/tumblr_mnh0n9pHJW1st5lhmo1_1280.jpg"))
 
         recyclerView = findViewById(R.id.images_recycler_view)
         linearlayoutManager = LinearLayoutManager(this)
@@ -54,7 +49,6 @@ class MainActivity : AppCompatActivity() {
         btn_search_request.setOnClickListener {
             imagesPresenter.searchImages(et_input_query.text.trim().toString())
         }
-
 
         statusSubject.subscribe {
             setStatusSubject(it)
