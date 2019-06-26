@@ -2,12 +2,17 @@ package com.globant.equattrocchio.cleanarchitecture.mvp.view.base
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import com.globant.equattrocchio.cleanarchitecture.R
 import com.globant.equattrocchio.cleanarchitecture.models.ImageModel
 import com.globant.equattrocchio.cleanarchitecture.mvp.ImagesContract
+import com.globant.equattrocchio.cleanarchitecture.mvp.view.ImagesView
+import com.globant.equattrocchio.cleanarchitecture.mvp.view.adapters.ImagesAdapter
 import dagger.android.AndroidInjection
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main_recyclerview.*
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -23,7 +28,14 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var imagesPresenter: ImagesContract.Presenter
 
-    private lateinit var imageList: ArrayList<ImageModel>
+    @Inject
+    lateinit var imagesView: ImagesView
+
+//    private lateinit var imageList: ArrayList<ImageModel>
+
+//    private lateinit var imagesAdapter: ImagesAdapter
+//
+//    private lateinit var recyclerView: RecyclerView
 
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,14 +44,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        imageList = arrayListOf(ImageModel(32, "https://splashbase.s3.amazonaws.com/unsplash/regular/tumblr_mnh0n9pHJW1st5lhmo1_1280.jpg"))
+        imagesView.initRecyclerview()
 
         btn_call_service.setOnClickListener {
             imagesPresenter.requestLatestImages()
         }
 
         btn_search_query_request.setOnClickListener {
-            imagesPresenter.searchImages(et_input_query.text.trim().toString())
+//            imagesPresenter.searchImages(et_input_query.text.trim().toString())
         }
 
 

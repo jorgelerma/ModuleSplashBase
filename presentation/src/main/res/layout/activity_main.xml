@@ -22,6 +22,13 @@
         android:layout_height="wrap_content"
         android:text="@string/call_service_request" />
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_images_recycler_view"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android" />
+
     <include
         android:id="@+id/image_recycler_view"
         android:layout_width="fill_parent"

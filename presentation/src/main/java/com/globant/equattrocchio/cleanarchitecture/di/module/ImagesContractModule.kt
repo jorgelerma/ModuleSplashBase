@@ -18,6 +18,7 @@ import com.globant.equattrocchio.domain.service.ImageService
 import dagger.Binds
 import dagger.Module
 import dagger.Reusable
+import javax.inject.Singleton
 
 @Module(includes = [
     SubjectsModule::class

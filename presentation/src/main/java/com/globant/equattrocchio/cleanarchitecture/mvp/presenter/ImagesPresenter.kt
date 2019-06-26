@@ -24,24 +24,25 @@ class ImagesPresenter @Inject constructor(private val view : ImagesContract.View
     }
 
     override fun requestLatestImages() {
-        imagesResponse = model.serviceRequestCall()
-        view.setStatusSubject(REQUEST_SENT)
-
-        compositeDiposable.add(imagesResponse.subscribeWith(object : DisposableObserver<ResultViewInput>() {
-
-            override fun onComplete() {
-            }
-
-            override fun onNext(response: ResultViewInput) {
-                view.setStatusSubject(REQUEST_COMPLETED)
-                showImage(response)
-            }
-
-            override fun onError(e: Throwable) {
-                e.printStackTrace()
-            }
-
-        }))
+        view.updateTheImagesLisg()
+//        imagesResponse = model.serviceRequestCall()
+//        view.setStatusSubject(REQUEST_SENT)
+//
+//        compositeDiposable.add(imagesResponse.subscribeWith(object : DisposableObserver<ResultViewInput>() {
+//
+//            override fun onComplete() {
+//            }
+//
+//            override fun onNext(response: ResultViewInput) {
+//                view.setStatusSubject(REQUEST_COMPLETED)
+//                showImage(response)
+//            }
+//
+//            override fun onError(e: Throwable) {
+//                e.printStackTrace()
+//            }
+//
+//        }))
     }
 
     override fun searchImages(searchQuery: String) {
