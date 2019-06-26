@@ -6,4 +6,5 @@
     <string name="connection_error">Something went wrong, please try again later.</string>
     <string name="enter_your_search">Enter your search</string>
     <string name="image_description">an image</string>
+    <string name="id_imagen">Id Imagen</string>
 </resources>

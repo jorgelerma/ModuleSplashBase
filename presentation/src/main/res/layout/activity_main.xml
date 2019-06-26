@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/activity_bgcolor"
     android:orientation="vertical">
 
     <Button
@@ -22,15 +23,15 @@
         android:layout_height="wrap_content"
         android:text="@string/call_service_request" />
 
-    <include
-        android:id="@+id/image_recycler_view"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/activity_main_recyclerview" />
-
     <TextView
         android:id="@+id/tv_incoming_json"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/tv_height"
-        android:text="@string/incoming_json" />
+        android:layout_height="@dimen/tv_height" />
+
+    <include
+        layout="@layout/activity_main_recyclerview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+
 </LinearLayout>

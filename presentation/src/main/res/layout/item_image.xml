@@ -2,19 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/item_image_bgcolor"
     android:orientation="vertical">
 
-<TextView
-    android:id="@+id/image_id"
-    android:layout_width="match_parent"
-    android:layout_height="18dp"
-    android:text="Id Imagen" />
+    <TextView
+        android:id="@+id/image_id"
+        android:layout_width="match_parent"
+        android:layout_height="25dp" />
 
-<ImageView
-    android:id="@+id/iv_image_holder"
-    android:layout_width="62dp"
-    android:layout_height="62dp"
-    android:src="@mipmap/ic_launcher"
-    android:contentDescription="@string/image_description" />
+    <ImageView
+        android:id="@+id/iv_image_holder"
+        android:layout_gravity="center"
+        android:layout_width="380dp"
+        android:layout_height="320dp"
+        android:contentDescription="@string/image_description"
+        android:src="@mipmap/ic_launcher" />
 
 </LinearLayout>
