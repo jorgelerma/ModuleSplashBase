@@ -22,6 +22,5 @@ interface ImagesContract {
         fun showResult(input: ResultViewInput)
         fun setStatusSubject(status: Boolean)
         fun showImage(image: ResultViewInput)
-        fun showImage()
     }
 }

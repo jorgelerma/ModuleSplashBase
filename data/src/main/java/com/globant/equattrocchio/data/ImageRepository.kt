@@ -12,15 +12,15 @@ class ImageRepository @Inject constructor(private val mapper: ImageMapperImpl, p
 
     override fun getLatestImages(): Observable<ResultDomainInput> {
       return imagesApi.getInstance().getLatestImages()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
               .map { resp -> mapper.mapDataModelToDomainModel(resp) }
+              .subscribeOn(Schedulers.io())
+              .observeOn(AndroidSchedulers.mainThread())
     }
 
     override fun searchImages(searchQuery: String): Observable<ResultDomainInput> {
         return imagesApi.getInstance().searchQueryImage(searchQuery)
+                .map { resp -> mapper.mapDataModelToDomainModel(resp) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .map { resp -> mapper.mapDataModelToDomainModel(resp) }
     }
 }

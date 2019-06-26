@@ -10,6 +10,6 @@ interface SplashbaseApi {
     @GET("api/v1/images/latest")
     fun getLatestImages() : Observable<ResultDataInput>
 
-    @GET("api/v1/images/search?")
+    @GET("api/v1/images/search")
     fun searchQueryImage(@Query("query") imageQuery: String) : Observable<ResultDataInput>
 }
