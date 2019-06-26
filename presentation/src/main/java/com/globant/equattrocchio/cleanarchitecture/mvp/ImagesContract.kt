@@ -1,5 +1,6 @@
 package com.globant.equattrocchio.cleanarchitecture.mvp
 
+import com.globant.equattrocchio.cleanarchitecture.models.ImageModel
 import com.globant.equattrocchio.cleanarchitecture.models.ResultViewModel
 import io.reactivex.Observable
 
@@ -18,7 +19,7 @@ interface ImagesContract {
 
     interface View {
         fun showError()
-        fun showImage(image: ResultViewModel)
+        fun showImage(imagesList: List<ImageModel>)
         fun setStatusSubject(status: Boolean)
     }
 }

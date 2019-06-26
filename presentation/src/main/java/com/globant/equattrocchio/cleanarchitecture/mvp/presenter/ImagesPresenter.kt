@@ -15,7 +15,7 @@ class ImagesPresenter @Inject constructor(private val view: ImagesContract.View,
     private val compositeDiposable = CompositeDisposable()
 
     override fun showImage(response: ResultViewModel) {
-        view.showImage(response)
+        view.showImage(response.images)
     }
 
     override fun requestLatestImages() {
