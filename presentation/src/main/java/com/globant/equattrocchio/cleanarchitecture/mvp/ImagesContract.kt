@@ -6,10 +6,11 @@ import io.reactivex.Observable
 
 interface ImagesContract {
     interface Presenter {
-        fun showImage(response: ResultViewModel)
         fun requestLatestImages()
         fun searchImages(searchQuery: String)
         fun disposeObserver()
+        fun initAdapter()
+        fun updateImagesList(response: ResultViewModel)
     }
 
     interface Model {
@@ -19,7 +20,8 @@ interface ImagesContract {
 
     interface View {
         fun showError()
-        fun showImage(imagesList: List<ImageModel>)
         fun setStatusSubject(status: Boolean)
+        fun initAdapter()
+        fun updateImagesList(imagesList: List<ImageModel>)
     }
 }

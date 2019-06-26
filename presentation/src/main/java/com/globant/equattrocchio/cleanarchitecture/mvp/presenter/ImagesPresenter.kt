@@ -14,10 +14,6 @@ class ImagesPresenter @Inject constructor(private val view: ImagesContract.View,
     private lateinit var imagesResponse: Observable<ResultViewModel>
     private val compositeDiposable = CompositeDisposable()
 
-    override fun showImage(response: ResultViewModel) {
-        view.showImage(response.images)
-    }
-
     override fun requestLatestImages() {
         imagesResponse = model.serviceRequestCall()
         view.setStatusSubject(REQUEST_SENT)
@@ -29,7 +25,7 @@ class ImagesPresenter @Inject constructor(private val view: ImagesContract.View,
 
             override fun onNext(response: ResultViewModel) {
                 view.setStatusSubject(REQUEST_COMPLETED)
-                showImage(response)
+                updateImagesList(response)
             }
 
             override fun onError(e: Throwable) {
@@ -48,7 +44,7 @@ class ImagesPresenter @Inject constructor(private val view: ImagesContract.View,
 
             override fun onNext(response: ResultViewModel) {
                 view.setStatusSubject(REQUEST_COMPLETED)
-                showImage(response)
+                updateImagesList(response)
             }
 
             override fun onError(e: Throwable) {
@@ -61,5 +57,13 @@ class ImagesPresenter @Inject constructor(private val view: ImagesContract.View,
         if (!compositeDiposable.isDisposed) {
             compositeDiposable.dispose()
         }
+    }
+
+    override fun initAdapter(){
+        view.initAdapter()
+    }
+
+    override fun updateImagesList(response: ResultViewModel){
+        view.updateImagesList(response.images)
     }
 }
