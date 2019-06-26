@@ -1,6 +1,6 @@
 package com.globant.equattrocchio.cleanarchitecture
 
-import com.globant.equattrocchio.cleanarchitecture.models.ImageView
+import com.globant.equattrocchio.cleanarchitecture.models.ImageModel
 import com.globant.equattrocchio.cleanarchitecture.models.ResultViewInput
 import com.globant.equattrocchio.domain.models.Image
 import com.globant.equattrocchio.domain.models.ResultDomainInput
@@ -13,8 +13,8 @@ class ImagesViewMapperImpl @Inject constructor() : ImagesViewMapper {
         }
     }
 
-    override fun mapImage(image: Image): ImageView {
-        return ImageView().apply {
+    override fun mapImage(image: Image): ImageModel {
+        return ImageModel().apply {
             id = image.id
             url = image.url
         }
