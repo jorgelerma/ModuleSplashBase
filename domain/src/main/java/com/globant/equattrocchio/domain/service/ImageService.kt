@@ -1,11 +1,11 @@
 package com.globant.equattrocchio.domain.service
 
-import com.globant.equattrocchio.domain.models.ResultDomainInput
+import com.globant.equattrocchio.domain.models.ResultDomainModel
 import io.reactivex.Observable
 
 interface ImageService {
 
-    fun getLatestImages(): Observable<ResultDomainInput>
+    fun getLatestImages(): Observable<ResultDomainModel>
 
-    fun searchImages(searchQuery: String): Observable<ResultDomainInput>
+    fun searchImages(searchQuery: String): Observable<ResultDomainModel>
 }

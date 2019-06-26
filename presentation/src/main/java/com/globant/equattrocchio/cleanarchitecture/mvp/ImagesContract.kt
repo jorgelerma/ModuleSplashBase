@@ -1,26 +1,24 @@
 package com.globant.equattrocchio.cleanarchitecture.mvp
 
-import com.globant.equattrocchio.cleanarchitecture.models.ResultViewInput
+import com.globant.equattrocchio.cleanarchitecture.models.ResultViewModel
 import io.reactivex.Observable
 
 interface ImagesContract {
     interface Presenter {
-        fun showResponse(response: ResultViewInput)
-        fun showImage(response: ResultViewInput)
+        fun showImage(response: ResultViewModel)
         fun requestLatestImages()
         fun searchImages(searchQuery: String)
         fun disposeObserver()
     }
 
     interface Model {
-        fun serviceRequestCall(): Observable<ResultViewInput>
-        fun searchServiceRequestCall(searchQuery: String): Observable<ResultViewInput>
+        fun serviceRequestCall(): Observable<ResultViewModel>
+        fun searchServiceRequestCall(searchQuery: String): Observable<ResultViewModel>
     }
 
     interface View {
         fun showError()
-        fun showResult(input: ResultViewInput)
+        fun showImage(image: ResultViewModel)
         fun setStatusSubject(status: Boolean)
-        fun showImage(image: ResultViewInput)
     }
 }

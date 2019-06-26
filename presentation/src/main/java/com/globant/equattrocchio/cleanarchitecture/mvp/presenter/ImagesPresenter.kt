@@ -1,7 +1,6 @@
 package com.globant.equattrocchio.cleanarchitecture.mvp.presenter
 
-import android.util.Log
-import com.globant.equattrocchio.cleanarchitecture.models.ResultViewInput
+import com.globant.equattrocchio.cleanarchitecture.models.ResultViewModel
 import com.globant.equattrocchio.cleanarchitecture.mvp.ImagesContract
 import com.globant.equattrocchio.cleanarchitecture.utils.Constants.REQUEST_COMPLETED
 import com.globant.equattrocchio.cleanarchitecture.utils.Constants.REQUEST_SENT
@@ -10,16 +9,12 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import javax.inject.Inject
 
-class ImagesPresenter @Inject constructor(private val view : ImagesContract.View,  private val model: ImagesContract.Model) : ImagesContract.Presenter {
+class ImagesPresenter @Inject constructor(private val view: ImagesContract.View, private val model: ImagesContract.Model) : ImagesContract.Presenter {
 
-    private lateinit var imagesResponse: Observable<ResultViewInput>
+    private lateinit var imagesResponse: Observable<ResultViewModel>
     private val compositeDiposable = CompositeDisposable()
 
-    override fun showResponse(response: ResultViewInput) {
-        view.showResult(response)
-    }
-
-    override fun showImage(response: ResultViewInput) {
+    override fun showImage(response: ResultViewModel) {
         view.showImage(response)
     }
 
@@ -27,12 +22,12 @@ class ImagesPresenter @Inject constructor(private val view : ImagesContract.View
         imagesResponse = model.serviceRequestCall()
         view.setStatusSubject(REQUEST_SENT)
 
-        compositeDiposable.add(imagesResponse.subscribeWith(object : DisposableObserver<ResultViewInput>() {
+        compositeDiposable.add(imagesResponse.subscribeWith(object : DisposableObserver<ResultViewModel>() {
 
             override fun onComplete() {
             }
 
-            override fun onNext(response: ResultViewInput) {
+            override fun onNext(response: ResultViewModel) {
                 view.setStatusSubject(REQUEST_COMPLETED)
                 showImage(response)
             }
@@ -40,33 +35,30 @@ class ImagesPresenter @Inject constructor(private val view : ImagesContract.View
             override fun onError(e: Throwable) {
                 e.printStackTrace()
             }
-
         }))
     }
 
     override fun searchImages(searchQuery: String) {
         imagesResponse = model.searchServiceRequestCall(searchQuery)
         view.setStatusSubject(REQUEST_SENT)
-        compositeDiposable.add(imagesResponse.subscribeWith(object : DisposableObserver<ResultViewInput>(){
-            
+        compositeDiposable.add(imagesResponse.subscribeWith(object : DisposableObserver<ResultViewModel>() {
+
             override fun onComplete() {
-                Log.d(this.javaClass.simpleName, " onComplete  @ searchImages: ")
             }
 
-            override fun onNext(response: ResultViewInput) {
+            override fun onNext(response: ResultViewModel) {
                 view.setStatusSubject(REQUEST_COMPLETED)
                 showImage(response)
             }
-            
+
             override fun onError(e: Throwable) {
                 e.printStackTrace()
             }
-
         }))
     }
 
     override fun disposeObserver() {
-        if(!compositeDiposable.isDisposed){
+        if (!compositeDiposable.isDisposed) {
             compositeDiposable.dispose()
         }
     }

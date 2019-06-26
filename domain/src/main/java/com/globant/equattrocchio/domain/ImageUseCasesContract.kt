@@ -1,15 +1,15 @@
 package com.globant.equattrocchio.domain
 
-import com.globant.equattrocchio.domain.models.ResultDomainInput
+import com.globant.equattrocchio.domain.models.ResultDomainModel
 import io.reactivex.Observable
 
 interface ImageUseCasesContract {
 
-    interface GetLatestImagesContract{
-        fun getLatestImages(): Observable<ResultDomainInput>
+    interface GetLatestImages{
+        fun getLatestImages(): Observable<ResultDomainModel>
     }
 
-    interface SearchImagesContract{
-        fun searchImage(searchQuery: String): Observable<ResultDomainInput>
+    interface SearchImages{
+        fun searchImages(searchQuery: String): Observable<ResultDomainModel>
     }
 }

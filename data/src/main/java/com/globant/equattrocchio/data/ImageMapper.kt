@@ -1,12 +1,13 @@
 package com.globant.equattrocchio.data
 
 import com.globant.equattrocchio.data.response.ImageModelCache
-import com.globant.equattrocchio.data.response.ResultDataInput
+import com.globant.equattrocchio.data.response.ResultDataModel
 import com.globant.equattrocchio.domain.models.Image
-import com.globant.equattrocchio.domain.models.ResultDomainInput
+import com.globant.equattrocchio.domain.models.ResultDomainModel
 
 interface ImageMapper {
 
-    fun mapDataModelToDomainModel(inputModel: ResultDataInput): ResultDomainInput
+    fun mapDataModelToDomainModel(inputModel: ResultDataModel): ResultDomainModel
+
     fun mapImage(image: ImageModelCache): Image
 }

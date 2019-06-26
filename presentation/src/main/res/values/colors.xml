@@ -3,7 +3,6 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="activity_bgcolor">#5A5959</color>
+    <color name="activity_bgcolor">#817E7E</color>
     <color name="item_image_bgcolor">#5A5959</color>
-
 </resources>

@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             imagesPresenter.requestLatestImages()
         }
 
-        btn_search_query_request.setOnClickListener {
+        btn_search_request.setOnClickListener {
             imagesPresenter.searchImages(et_input_query.text.trim().toString())
         }
 

@@ -18,13 +18,13 @@
         android:hint="@string/enter_your_search" />
 
     <Button
-        android:id="@+id/btn_search_query_request"
+        android:id="@+id/btn_search_request"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/call_service_request" />
 
     <TextView
-        android:id="@+id/tv_incoming_json"
+        android:id="@+id/tv_message_output"
         android:layout_width="match_parent"
         android:layout_height="@dimen/tv_height" />
 
@@ -32,6 +32,5 @@
         layout="@layout/activity_main_recyclerview"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
-
 
 </LinearLayout>

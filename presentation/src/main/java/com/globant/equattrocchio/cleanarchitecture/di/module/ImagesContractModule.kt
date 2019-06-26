@@ -50,11 +50,11 @@ abstract class ImagesContractModule {
 
     @Binds
     @Reusable
-    abstract fun provideGetLatestImagesUseCase(getLatestImagesUseCase: GetLatestImagesUseCase): ImageUseCasesContract.GetLatestImagesContract
+    abstract fun provideGetLatestImagesUseCase(getLatestImagesUseCase: GetLatestImagesUseCase): ImageUseCasesContract.GetLatestImages
 
     @Binds
     @Reusable
-    abstract fun provideSearchImagesUseCase(searchImagesUseCase: SearchImagesUseCase): ImageUseCasesContract.SearchImagesContract
+    abstract fun provideSearchImagesUseCase(searchImagesUseCase: SearchImagesUseCase): ImageUseCasesContract.SearchImages
 
     @Binds
     @Reusable
