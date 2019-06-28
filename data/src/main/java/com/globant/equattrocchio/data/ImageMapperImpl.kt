@@ -1,6 +1,6 @@
 package com.globant.equattrocchio.data
 
-import com.globant.equattrocchio.data.response.ImageModelCache
+import com.globant.equattrocchio.data.response.ImageModelService
 import com.globant.equattrocchio.data.response.ResultDataModel
 import com.globant.equattrocchio.domain.models.Image
 import com.globant.equattrocchio.domain.models.ResultDomainModel
@@ -14,7 +14,7 @@ class ImageMapperImpl @Inject constructor() : ImageMapper {
         }
     }
 
-    override fun mapImage(image: ImageModelCache): Image {
+    override fun mapImage(image: ImageModelService): Image {
         return Image().apply {
             id = image.id
             url = image.url
