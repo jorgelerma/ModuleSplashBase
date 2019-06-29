@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.globant.equattrocchio.cleanarchitecture.R
 import com.globant.equattrocchio.cleanarchitecture.mvp.ImagesContract
+import com.globant.equattrocchio.data.realm.RealmInstance
 import dagger.android.AndroidInjection
 import io.reactivex.subjects.PublishSubject
 import io.realm.*
-import io.realm.RealmConfiguration
-import io.realm.exceptions.RealmMigrationNeededException
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -22,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var imagesPresenter: ImagesContract.Presenter
 
-    private lateinit var mRealm: Realm
+    private lateinit var realmInstance: Realm
 
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,17 +30,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         imagesPresenter.initAdapter()
 
-        Realm.init(this)
-        val realmConfig = RealmConfiguration
-                .Builder()
-                .deleteRealmIfMigrationNeeded()
-                .build()
-
-        try{
-            mRealm = Realm.getDefaultInstance()
-        }catch (e: RealmMigrationNeededException){
-            e.printStackTrace()
-        }
+        realmInstance = RealmInstance().getInstance()
 
         btn_call_service.setOnClickListener {
             imagesPresenter.requestLatestImages()
@@ -79,8 +68,8 @@ class MainActivity : AppCompatActivity() {
     @Override
     override fun onDestroy() {
         super.onDestroy()
-        if(mRealm != null){
-            mRealm.close()
+        if(realmInstance != null){
+            realmInstance.close()
         }
     }
 

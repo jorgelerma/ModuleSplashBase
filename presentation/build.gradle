@@ -48,7 +48,7 @@ dependencies {
 
     implementation project(path: ':domain')
     implementation project(path: ':data')
-//    compile project(path: ':domain', configuration: 'default')
+//    implementation project(path: ':data', configuration: 'default')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     /* Testing */

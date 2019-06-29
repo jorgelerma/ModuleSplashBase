@@ -1,3 +1,6 @@
 package com.globant.equattrocchio.data.realm.models
 
-data class ResultCacheModel(var images: List<ImageModelCache> = emptyList())
+import io.realm.RealmList
+import io.realm.RealmObject
+
+open class ResultCacheModel(var images: RealmList<ImageModelCache> = RealmList()) : RealmObject()

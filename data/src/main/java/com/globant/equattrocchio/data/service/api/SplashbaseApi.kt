@@ -1,6 +1,6 @@
 package com.globant.equattrocchio.data.service.api
 
-import com.globant.equattrocchio.data.response.ResultDataModel
+import com.globant.equattrocchio.data.models.ResultDataModel
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query

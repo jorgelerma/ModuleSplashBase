@@ -8,7 +8,9 @@ import com.globant.equattrocchio.cleanarchitecture.mvp.presenter.ImagesPresenter
 import com.globant.equattrocchio.cleanarchitecture.mvp.view.ImagesView
 import com.globant.equattrocchio.data.ImageMapper
 import com.globant.equattrocchio.data.ImageMapperImpl
-import com.globant.equattrocchio.data.ImageRepository
+import com.globant.equattrocchio.data.repository.ImageRepository
+import com.globant.equattrocchio.data.repository.mappers.ImageCacheMapper
+import com.globant.equattrocchio.data.repository.mappers.ImageCacheMapperImpl
 import com.globant.equattrocchio.data.service.api.ImagesApi
 import com.globant.equattrocchio.data.service.api.ImagesApiImpl
 import com.globant.equattrocchio.domain.GetLatestImagesUseCase
@@ -18,6 +20,7 @@ import com.globant.equattrocchio.domain.service.ImageService
 import dagger.Binds
 import dagger.Module
 import dagger.Reusable
+import javax.inject.Singleton
 
 @Module(includes = [
     SubjectsModule::class
@@ -33,7 +36,7 @@ abstract class ImagesContractModule {
     abstract fun provideImagesApi(imagesApi: ImagesApiImpl): ImagesApi
 
     @Binds
-    @Reusable
+    @Singleton
     abstract fun provideImagesRepository(imagesRepository: ImageRepository): ImageService
 
     @Binds
@@ -59,4 +62,8 @@ abstract class ImagesContractModule {
     @Binds
     @Reusable
     abstract fun provideImageViewMapper(imagesViewMapper: ImagesViewMapperImpl): ImagesViewMapper
+
+    @Binds
+    @Reusable
+    abstract fun provideImageCacheMapper(imagesCacheMapperImpl: ImageCacheMapperImpl): ImageCacheMapper
 }
