@@ -1,5 +1,6 @@
 package com.globant.equattrocchio.cleanarchitecture.mvp.presenter
 
+import android.util.Log
 import com.globant.equattrocchio.cleanarchitecture.models.ResultViewModel
 import com.globant.equattrocchio.cleanarchitecture.mvp.ImagesContract
 import com.globant.equattrocchio.cleanarchitecture.utils.Constants.REQUEST_COMPLETED
@@ -25,6 +26,10 @@ class ImagesPresenter @Inject constructor(private val view: ImagesContract.View,
 
             override fun onNext(response: ResultViewModel) {
                 view.setStatusSubject(REQUEST_COMPLETED)
+                for(res in response.images){
+                    Log.v(this.javaClass.simpleName, "**** ${res.url}")
+
+                }
                 updateImagesList(response)
             }
 

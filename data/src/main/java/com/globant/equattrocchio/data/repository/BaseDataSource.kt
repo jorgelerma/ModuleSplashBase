@@ -12,10 +12,10 @@ abstract class BaseDataSource{
     open fun save(input: ResultCacheModel){
 
         realmInstance = getRealmInstance()
-        Log.d(this.javaClass.simpleName, "***** @save ")
+        Log.v(this.javaClass.simpleName, "***** @save ")
 
         if(realmInstance != null){
-            Log.d(this.javaClass.simpleName, "***** mRealm not null on save, persistating list: ")
+            Log.v(this.javaClass.simpleName, "***** mRealm not null on save, persistating list: ")
 
             realmInstance.use {
                 it.executeTransaction {
@@ -25,22 +25,23 @@ abstract class BaseDataSource{
         }
     }
 
-    fun getAll(): ResultCacheModel {
+    fun getAll(): List<ResultCacheModel> {
 
         var imageCacheArrayList: ArrayList<ResultCacheModel> = ArrayList()
+        lateinit var imageCacheList: List<ResultCacheModel>
         realmInstance = getRealmInstance()
 
         if(realmInstance != null){
-            Log.d(this.javaClass.simpleName, "***** mRealm not null on getAll: ")
-            val imageCacheList = realmInstance.where(ResultCacheModel::class.java).findAll()
-            imageCacheArrayList.addAll(imageCacheList)
+            Log.v(this.javaClass.simpleName, "***** mRealm not null on getAll: ")
+            imageCacheList = realmInstance.where(ResultCacheModel::class.java).findAll()
+//            imageCacheArrayList.addAll(imageCacheList)
         }
 
-        if(imageCacheArrayList.size <= 0){
-            imageCacheArrayList.add(ResultCacheModel())
-        }
+//        if(imageCacheArrayList.size <= 0){
+//            imageCacheArrayList.add(ResultCacheModel())
+//        }
 
-        return imageCacheArrayList[0]
+        return imageCacheList
     }
 
     fun getRealmInstance(): Realm {

@@ -19,26 +19,45 @@ class ImageRepository @Inject constructor(private val mapper: ImageMapper,
 
     override fun getLatestImages(): Observable<ResultDomainModel> {
 
-        var imagesResponse: Observable<ResultDataModel> = imagesApi.getInstance().getLatestImages()
+        var imagesResponse: Observable<ResultDataModel>
 
         lateinit var imagesMappedResponse: Observable<ResultDomainModel>
         val imagesCachedList = getAll()
 
-        if(imagesCachedList != null){
-            Log.d(this.javaClass.simpleName, "***** @elseif when cacheList not Empty: ")
+        if(imagesCachedList.isNotEmpty()){
+            Log.v(this.javaClass.simpleName, "***** @elseif when cacheList not Empty: ")
 
-            val mappedCachedToDomain = mapperCache.mapCacheModelToDomainModel(imagesCachedList)
-            imagesMappedResponse = Observable.just(mappedCachedToDomain)
+            for(input in imagesCachedList){
+                Log.v(this.javaClass.simpleName, "***** ${input.images}")
+            }
+
+            val mappedCachedToDomain: ResultDomainModel = mapperCache.mapCacheModelToDomainModel(imagesCachedList[0])
+//            return Observable.just(mappedCachedToDomain)
+
+            Log.v(this.javaClass.simpleName, " ***** ## $mappedCachedToDomain")
+//            return Observable.just(mappedCachedToDomain)
+            return Observable.create<ResultDomainModel>{
+                it -> it.onNext(mappedCachedToDomain)
+                it.onComplete()
+            }
             //*****************
 
         }else {
-            Log.d(this.javaClass.simpleName, "***** Cache Empty: ")
-            val mappedCacheList =
-                    imagesResponse.map { resp -> mapperCache.mapServiceModelToCacheModel(resp) }
+            Log.v(this.javaClass.simpleName, "***** Cache Empty: ")
+            imagesResponse = imagesApi.getInstance().getLatestImages()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
 
-            imagesMappedResponse = imagesResponse.map {
+//            imagesMappedResponse = imagesResponse.map {
+//                resp -> mapper.mapDataModelToDomainModel(resp)
+//            }
+
+            return imagesResponse.map {
                 resp -> mapper.mapDataModelToDomainModel(resp)
             }
+
+            val mappedCacheList =
+                    imagesResponse.map { resp -> mapperCache.mapServiceModelToCacheModel(resp) }
 
 //            mappedCacheList.map { this.save(it) }
             mappedCacheList
@@ -57,7 +76,7 @@ class ImageRepository @Inject constructor(private val mapper: ImageMapper,
     }
 
     override fun save(input: ResultCacheModel){
-        Log.d(this.javaClass.simpleName, "***** Child save invoked: ")
+        Log.v(this.javaClass.simpleName, "***** Child save invoked: ")
         super.save(input)
 
     }
