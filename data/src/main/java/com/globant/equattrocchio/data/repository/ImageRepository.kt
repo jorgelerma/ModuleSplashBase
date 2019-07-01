@@ -9,8 +9,12 @@ import com.globant.equattrocchio.data.service.api.ImagesApi
 import com.globant.equattrocchio.domain.models.ResultDomainModel
 import com.globant.equattrocchio.domain.service.ImageService
 import io.reactivex.Observable
+import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subscribers.DisposableSubscriber
+import org.reactivestreams.Subscriber
 import javax.inject.Inject
 
 class ImageRepository @Inject constructor(private val mapper: ImageMapper,
@@ -45,25 +49,59 @@ class ImageRepository @Inject constructor(private val mapper: ImageMapper,
         }else {
             Log.v(this.javaClass.simpleName, "***** Cache Empty: ")
             imagesResponse = imagesApi.getInstance().getLatestImages()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
 
 //            imagesMappedResponse = imagesResponse.map {
 //                resp -> mapper.mapDataModelToDomainModel(resp)
 //            }
 
+            val mappedCacheList =
+                    imagesResponse.map { resp -> mapperCache.mapServiceModelToCacheModel(resp) }
+
+
+            mappedCacheList
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(Schedulers.io())
+                    .subscribeWith(object : Observer<ResultCacheModel>{
+                override fun onSubscribe(d: Disposable) {
+                    Log.v(this.javaClass.simpleName, "**** onSubs")
+                }
+
+                override fun onNext(t: ResultCacheModel) {
+                    Log.v(this.javaClass.simpleName, "**** onNextxx")
+                    save(t)
+                }
+
+                override fun onError(e: Throwable) {
+                    Log.v(this.javaClass.simpleName, "**** onError")
+                }
+
+                override fun onComplete() {
+                    Log.v(this.javaClass.simpleName, "**** onComplete")
+                }
+            })
+
+//
+//            mappedCacheList.subscribe { it -> save(it) }
+
+//            imagesResponse.map { resp -> mapperCache.mapServiceModelToCacheModel(resp) }
+
+
+
+//            {save(it)},{it.images.map { Log.v(this.javaClass.simpleName, it.toString()) }}
+//            mappedCacheList.map { this.save(it) }
+
+
             return imagesResponse.map {
                 resp -> mapper.mapDataModelToDomainModel(resp)
             }
 
-            val mappedCacheList =
-                    imagesResponse.map { resp -> mapperCache.mapServiceModelToCacheModel(resp) }
 
-//            mappedCacheList.map { this.save(it) }
-            mappedCacheList
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(Schedulers.io())
-                    .subscribe { it -> save(it) }
+
+
+//            mappedCacheList
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(Schedulers.io())
+//                    .subscribe { it -> save(it) }
         }
         return imagesMappedResponse
     }
@@ -71,11 +109,9 @@ class ImageRepository @Inject constructor(private val mapper: ImageMapper,
     override fun searchImages(searchQuery: String): Observable<ResultDomainModel> {
         return imagesApi.getInstance().searchQueryImage(searchQuery)
                 .map { resp -> mapper.mapDataModelToDomainModel(resp) }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
     }
 
-    override fun save(input: ResultCacheModel){
+    override fun save(input: ResultCacheModel?){
         Log.v(this.javaClass.simpleName, "***** Child save invoked: ")
         super.save(input)
 

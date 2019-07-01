@@ -9,7 +9,7 @@ abstract class BaseDataSource{
 
     private lateinit var realmInstance: Realm
 
-    open fun save(input: ResultCacheModel){
+    open fun save(input: ResultCacheModel?){
 
         realmInstance = getRealmInstance()
         Log.v(this.javaClass.simpleName, "***** @save ")
