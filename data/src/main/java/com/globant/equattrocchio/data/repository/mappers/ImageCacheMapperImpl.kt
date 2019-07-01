@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class ImageCacheMapperImpl @Inject constructor(): ImageCacheMapper {
 
-    override fun mapServiceModelToCacheModel(inputModel: ResultDataModel): ResultCacheModel {
+    override fun mapDataModelToCacheModel(inputModel: ResultDataModel): ResultCacheModel {
         return ResultCacheModel().apply {
             images = RealmList<ImageModelCache>().apply {
                 inputModel.images.map {
@@ -30,20 +30,45 @@ class ImageCacheMapperImpl @Inject constructor(): ImageCacheMapper {
         }
     }
 
-    override fun mapCacheModelToDomainModel(inputModel: ResultCacheModel): ResultDomainModel {
-        return ResultDomainModel().apply {
-            images = inputModel.images.map {
-                it -> mapImage(it)
-            }
-        }
-    }
+//    override fun mapCacheModelToDomainModel(inputModel: ResultCacheModel): ResultDomainModel {
+//        return ResultDomainModel().apply {
+//            images = inputModel.images.map {
+//                it -> mapImage(it)
+//            }
+//        }
+//    }
 
-    override fun mapImage(image: ImageModelCache): Image {
-        return Image().apply {
+    override fun mapImage(image: ImageModelCache): ImageModelService {
+        return ImageModelService().apply {
             id = image.id
             url = image.url
             largeUrl = image.largeUrl
             sourceId = image.sourceId
+        }
+    }
+
+    override fun mapCacheModelToDataModel(inputModel: ResultCacheModel): ResultDataModel {
+        return ResultDataModel().apply {
+            images = inputModel.images.map { mapImage(it) }
+        }
+    }
+
+    override fun mapDomainModelToCacheModel(input: ResultDomainModel): ResultCacheModel {
+        return ResultCacheModel().apply {
+            images = RealmList<ImageModelCache>().apply {
+                input.images.map {
+                    add(mapImage(it))
+                }
+            }
+        }
+    }
+
+    override fun mapImage(image: Image): ImageModelCache {
+        return ImageModelCache().apply {
+            id = image.id
+            url = image.url
+            largeUrl = image.largeUrl
+            sourceId = image.sourceId.toString()
         }
     }
 }

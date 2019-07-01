@@ -9,11 +9,18 @@ import com.globant.equattrocchio.domain.models.ResultDomainModel
 
 interface ImageCacheMapper {
 
-    fun mapServiceModelToCacheModel(inputModel: ResultDataModel): ResultCacheModel
+    fun mapDataModelToCacheModel(inputModel: ResultDataModel): ResultCacheModel
 
     fun mapImage(image: ImageModelService): ImageModelCache
 
-    fun mapCacheModelToDomainModel(inputModel: ResultCacheModel): ResultDomainModel
+//    fun mapCacheModelToDomainModel(inputModel: ResultCacheModel): ResultDomainModel
 
-    fun mapImage(image: ImageModelCache): Image
+    fun mapCacheModelToDataModel(inputModel: ResultCacheModel): ResultDataModel
+
+    fun mapImage(image: ImageModelCache): ImageModelService
+
+    fun mapDomainModelToCacheModel(input: ResultDomainModel): ResultCacheModel
+
+    fun mapImage(image: Image): ImageModelCache
+
 }
