@@ -3,58 +3,29 @@ package com.globant.equattrocchio.data.repository
 import android.util.Log
 import com.globant.equattrocchio.data.realm.RealmInstance
 import com.globant.equattrocchio.data.realm.models.ResultCacheModel
-import io.reactivex.Observable
-import io.reactivex.Observer
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
 
 abstract class BaseDataSource{
 
-    private lateinit var realmInstance: Realm
-
-    open fun save(inputResult: Observable<ResultCacheModel>){
-
-//        inputResult.map { persistData(it) }
-
-        inputResult
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
-                .subscribeWith(object: Observer<ResultCacheModel>{
-                    override fun onComplete() {
-                    }
-
-                    override fun onSubscribe(d: Disposable) {
-                    }
-
-                    override fun onNext(result: ResultCacheModel) {
-                        persistData(result)
-                    }
-
-                    override fun onError(e: Throwable) {
-                        e.printStackTrace()
-                    }
-                })
-    }
+    lateinit var realmInstanceRef:Realm
 
     fun getAll(): List<ResultCacheModel> {
 
         lateinit var imageCacheList: List<ResultCacheModel>
-        realmInstance = getRealmInstance()
+        realmInstanceRef = getRealmInstance()
 
-        if(realmInstance != null){
-            imageCacheList = realmInstance.where(ResultCacheModel::class.java).findAll()
+        if(realmInstanceRef != null){
+            imageCacheList = realmInstanceRef.where(ResultCacheModel::class.java).findAll() as List<ResultCacheModel>
         }
         return imageCacheList
     }
 
-    fun persistData(input: ResultCacheModel){
-        realmInstance = getRealmInstance()
+    fun saveData(input: ResultCacheModel){
 
-        if(realmInstance != null){
+        realmInstanceRef = getRealmInstance()
+        if(realmInstanceRef != null){
             Log.v(this.javaClass.simpleName, "***** mRealm not null on save, persistating list: ")
-
-            realmInstance.use {
+            realmInstanceRef.use {
                 it.executeTransaction {
                     it.insertOrUpdate(input)
                 }

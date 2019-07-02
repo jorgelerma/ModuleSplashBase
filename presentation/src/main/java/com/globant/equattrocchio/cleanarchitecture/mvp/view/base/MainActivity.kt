@@ -2,10 +2,12 @@ package com.globant.equattrocchio.cleanarchitecture.mvp.view.base
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import com.globant.equattrocchio.cleanarchitecture.R
 import com.globant.equattrocchio.cleanarchitecture.mvp.ImagesContract
 import com.globant.equattrocchio.data.realm.RealmInstance
 import dagger.android.AndroidInjection
+import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.realm.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -43,6 +45,14 @@ class MainActivity : AppCompatActivity() {
         statusSubject.subscribe {
             setStatusSubject(it)
         }
+
+        Observable.fromCallable {
+            "EMPTY"
+        }
+                .startWith("First of all!")
+                .subscribe {
+                    Log.e(this.javaClass.simpleName, it)
+                }
     }
 
     @Override

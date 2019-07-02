@@ -18,27 +18,28 @@ class ImageRepository @Inject constructor(private val mapper: ImageMapper,
 
         var imagesResponse: Observable<ResultDataModel> = imagesApi.getInstance().getLatestImages()
         val imagesCachedList = getAll()
-        lateinit var mappedCachedToData: ResultDataModel
+        var mappedCachedToData: ResultDataModel = ResultDataModel()
 
         if(imagesCachedList.isNotEmpty()){
             Log.v(this.javaClass.simpleName, "***** CACHE NOT Empty: ")
-
             mappedCachedToData = mapperCache.mapCacheModelToDataModel(imagesCachedList[0])
-            imagesResponse.startWith(mappedCachedToData)
         }
 
-        return imagesResponse.map { resp -> mapper.mapDataModelToDomainModel(resp)}
+        return imagesResponse
+                .map { resp -> mapper.mapDataModelToDomainModel(resp)}
                 .doOnNext {
-                    persistData(mapperCache.mapDomainModelToCacheModel(it))
+                    saveData(mapperCache.mapDomainModelToCacheModel(it))
                 }
                 .onErrorResumeNext { throwable: Throwable ->
                     Log.e(this.javaClass.simpleName, "*** onErrror ${throwable.message}")
 //                    Observable.error(throwable)
                     Observable.just(mapper.mapDataModelToDomainModel(mappedCachedToData))
                 }
+                .startWith(mapper.mapDataModelToDomainModel(mappedCachedToData))
     }
 
     override fun searchImages(searchQuery: String): Observable<ResultDomainModel> {
+
         var imagesResponse: Observable<ResultDataModel> = imagesApi.getInstance().searchQueryImage(searchQuery)
         val imagesCachedList = getAll()
         lateinit var mappedCachedToData: ResultDataModel
@@ -52,7 +53,7 @@ class ImageRepository @Inject constructor(private val mapper: ImageMapper,
 
         return imagesResponse.map { resp -> mapper.mapDataModelToDomainModel(resp)}
                 .doOnNext {
-                    persistData(mapperCache.mapDomainModelToCacheModel(it))
+                    saveData(mapperCache.mapDomainModelToCacheModel(it))
                 }
                 .onErrorResumeNext { throwable: Throwable ->
                     Log.e(this.javaClass.simpleName, "*** onErrror ${throwable.message}")
@@ -60,29 +61,4 @@ class ImageRepository @Inject constructor(private val mapper: ImageMapper,
                     Observable.just(mapper.mapDataModelToDomainModel(mappedCachedToData))
                 }
     }
-
-//    override fun searchImages(searchQuery: String): Observable<ResultDomainModel> {
-//        var imagesResponse: Observable<ResultDataModel> = imagesApi.getInstance().searchQueryImage(searchQuery)
-//        val imagesCachedList = getAll()
-//
-//        if(imagesCachedList.isNotEmpty()){
-//            Log.v(this.javaClass.simpleName, "***** CACHE NOT Empty: ")
-//
-////            val mappedCachedToDomain: ResultDomainModel = mapperCache.mapCacheModelToDomainModel(imagesCachedList[0])
-//            val mappedCachedToDomain: ResultDataModel= mapperCache.mapCacheModelToDataModel(imagesCachedList[0])
-//
-//            imagesResponse.doOnNext { mappedCachedToDomain}
-//
-//        }else if(imagesCachedList.isEmpty()){
-//            Log.v(this.javaClass.simpleName, "***** CACHE IS Empty: ")
-//
-//            val mappedCacheList =
-//                    imagesResponse.map { resp -> mapperCache.mapDataModelToCacheModel(resp) }
-//            save(mappedCacheList)
-//        }
-//        Log.v(this.javaClass.simpleName, "***** MAKES REQUEST EITHER WAYS: ")
-//
-//        return imagesResponse.map {
-//            resp -> mapper.mapDataModelToDomainModel(resp)}
-//    }
 }
