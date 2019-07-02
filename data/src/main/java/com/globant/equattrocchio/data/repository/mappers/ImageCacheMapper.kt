@@ -13,8 +13,6 @@ interface ImageCacheMapper {
 
     fun mapImage(image: ImageModelService): ImageModelCache
 
-//    fun mapCacheModelToDomainModel(inputModel: ResultCacheModel): ResultDomainModel
-
     fun mapCacheModelToDataModel(inputModel: ResultCacheModel): ResultDataModel
 
     fun mapImage(image: ImageModelCache): ImageModelService
@@ -22,5 +20,4 @@ interface ImageCacheMapper {
     fun mapDomainModelToCacheModel(input: ResultDomainModel): ResultCacheModel
 
     fun mapImage(image: Image): ImageModelCache
-
 }

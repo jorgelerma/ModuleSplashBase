@@ -9,7 +9,7 @@ import com.globant.equattrocchio.domain.models.ResultDomainModel
 import io.realm.RealmList
 import javax.inject.Inject
 
-class ImageCacheMapperImpl @Inject constructor(): ImageCacheMapper {
+class ImageCacheMapperImpl @Inject constructor() : ImageCacheMapper {
 
     override fun mapDataModelToCacheModel(inputModel: ResultDataModel): ResultCacheModel {
         return ResultCacheModel().apply {
@@ -29,14 +29,6 @@ class ImageCacheMapperImpl @Inject constructor(): ImageCacheMapper {
             sourceId = image.sourceId.toString()
         }
     }
-
-//    override fun mapCacheModelToDomainModel(inputModel: ResultCacheModel): ResultDomainModel {
-//        return ResultDomainModel().apply {
-//            images = inputModel.images.map {
-//                it -> mapImage(it)
-//            }
-//        }
-//    }
 
     override fun mapImage(image: ImageModelCache): ImageModelService {
         return ImageModelService().apply {

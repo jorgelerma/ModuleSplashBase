@@ -11,4 +11,3 @@ interface ImagesViewMapper {
 
     fun mapImage(image: Image): ImageModel
 }
-

@@ -1,74 +1,62 @@
 package com.globant.equattrocchio.cleanarchitecture.mvp.presenter
 
-import android.util.Log
 import com.globant.equattrocchio.cleanarchitecture.models.ResultViewModel
 import com.globant.equattrocchio.cleanarchitecture.mvp.ImagesContract
-import com.globant.equattrocchio.cleanarchitecture.utils.Constants.REQUEST_COMPLETED
-import com.globant.equattrocchio.cleanarchitecture.utils.Constants.REQUEST_SENT
-import io.reactivex.Observable
-import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableObserver
 import javax.inject.Inject
 
 class ImagesPresenter @Inject constructor(private val view: ImagesContract.View, private val model: ImagesContract.Model) : ImagesContract.Presenter {
 
-    private lateinit var imagesResponse: Observable<ResultViewModel>
-    private val compositeDiposable = CompositeDisposable()
+    private var imageDisposable: Disposable? = null
 
     override fun requestLatestImages() {
-        imagesResponse = model.serviceRequestCall()
-        view.setStatusSubject(REQUEST_SENT)
+        imageDisposable = model.serviceRequestCall()
+                .subscribeWith(object : DisposableObserver<ResultViewModel>() {
+                    override fun onComplete() {
+                    }
 
-        compositeDiposable.add(imagesResponse.subscribeWith(object : DisposableObserver<ResultViewModel>() {
+                    override fun onNext(response: ResultViewModel) {
+                        updateImagesList(response)
+                    }
 
-            override fun onComplete() {
-            }
-
-            override fun onNext(response: ResultViewModel) {
-                view.setStatusSubject(REQUEST_COMPLETED)
-                for(res in response.images){
-                    Log.v(this.javaClass.simpleName, "**** ${res.url}")
-
-                }
-                updateImagesList(response)
-            }
-
-            override fun onError(e: Throwable) {
-                e.printStackTrace()
-            }
-        }))
+                    override fun onError(error: Throwable) {
+                        error.printStackTrace()
+                        showError(error.message.toString())
+                    }
+                })
     }
 
     override fun searchImages(searchQuery: String) {
-        imagesResponse = model.searchServiceRequestCall(searchQuery)
-        view.setStatusSubject(REQUEST_SENT)
-        compositeDiposable.add(imagesResponse.subscribeWith(object : DisposableObserver<ResultViewModel>() {
+        imageDisposable = model.searchServiceRequestCall(searchQuery)
+                .subscribeWith(object : DisposableObserver<ResultViewModel>() {
+                    override fun onComplete() {
+                    }
 
-            override fun onComplete() {
-            }
+                    override fun onNext(response: ResultViewModel) {
+                        updateImagesList(response)
+                    }
 
-            override fun onNext(response: ResultViewModel) {
-                view.setStatusSubject(REQUEST_COMPLETED)
-                updateImagesList(response)
-            }
-
-            override fun onError(e: Throwable) {
-                e.printStackTrace()
-            }
-        }))
+                    override fun onError(error: Throwable) {
+                        error.printStackTrace()
+                        showError(error.message.toString())
+                    }
+                })
     }
 
     override fun disposeObserver() {
-        if (!compositeDiposable.isDisposed) {
-            compositeDiposable.dispose()
-        }
+        imageDisposable?.dispose()
     }
 
-    override fun initAdapter(){
+    override fun initAdapter() {
         view.initAdapter()
     }
 
-    override fun updateImagesList(response: ResultViewModel){
+    override fun updateImagesList(response: ResultViewModel) {
         view.updateImagesList(response.images)
+    }
+
+    override fun showError(error: String) {
+        view.showError(error)
     }
 }

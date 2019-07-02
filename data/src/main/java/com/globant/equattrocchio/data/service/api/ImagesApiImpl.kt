@@ -12,7 +12,7 @@ class ImagesApiImpl @Inject constructor() : ImagesApi {
 
     override fun getInstance(): SplashbaseApi {
 
-        if(!::retrofitInstance.isInitialized){
+        if (!::retrofitInstance.isInitialized) {
             val retrofit = Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())

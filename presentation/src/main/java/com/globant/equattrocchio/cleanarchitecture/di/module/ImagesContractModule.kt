@@ -22,9 +22,7 @@ import dagger.Module
 import dagger.Reusable
 import javax.inject.Singleton
 
-@Module(includes = [
-    SubjectsModule::class
-])
+@Module
 abstract class ImagesContractModule {
 
     @Binds

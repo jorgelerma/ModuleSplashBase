@@ -11,6 +11,7 @@ interface ImagesContract {
         fun disposeObserver()
         fun initAdapter()
         fun updateImagesList(response: ResultViewModel)
+        fun showError(error: String)
     }
 
     interface Model {
@@ -19,8 +20,7 @@ interface ImagesContract {
     }
 
     interface View {
-        fun showError()
-        fun setStatusSubject(status: Boolean)
+        fun showError(error: String)
         fun initAdapter()
         fun updateImagesList(imagesList: List<ImageModel>)
     }

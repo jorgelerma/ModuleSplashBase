@@ -1,31 +1,29 @@
 package com.globant.equattrocchio.data.repository
 
-import android.util.Log
 import com.globant.equattrocchio.data.realm.RealmInstance
 import com.globant.equattrocchio.data.realm.models.ResultCacheModel
 import io.realm.Realm
 
-abstract class BaseDataSource{
+abstract class BaseDataSource {
 
-    lateinit var realmInstanceRef:Realm
+    private lateinit var realmInstanceRef: Realm
 
     fun getAll(): List<ResultCacheModel> {
 
         lateinit var imageCacheList: List<ResultCacheModel>
         realmInstanceRef = getRealmInstance()
 
-        if(realmInstanceRef != null){
+        if (realmInstanceRef != null) {
             imageCacheList = realmInstanceRef.where(ResultCacheModel::class.java).findAll() as List<ResultCacheModel>
         }
         return imageCacheList
     }
 
-    fun saveData(input: ResultCacheModel){
+    fun saveData(input: ResultCacheModel) {
 
         realmInstanceRef = getRealmInstance()
-        if(realmInstanceRef != null){
-            Log.v(this.javaClass.simpleName, "***** mRealm not null on save, persistating list: ")
-            realmInstanceRef.use {
+        if (realmInstanceRef != null) {
+            realmInstanceRef.use { it ->
                 it.executeTransaction {
                     it.insertOrUpdate(input)
                 }
